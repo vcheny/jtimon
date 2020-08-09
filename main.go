@@ -55,7 +55,8 @@ var (
 	grpcHeaders    = flag.Bool("grpc-headers", false, "Add grpc headers in DB")
 	udp            = flag.Bool("udp-server", false, "Become UDP server to receive UDP telemetry packets from Junos")
 	port           = flag.Int64("port", 0, "UDP port number to listen on")
-
+	insecure       = flag.Bool("insecure", false, "When set, the server certificate will not be verified during TLS handshake."))
+	
 	version   = "version-not-available"
 	buildTime = "build-time-not-available"
 )
@@ -155,6 +156,11 @@ func worker(file string, idx int, wg *sync.WaitGroup) (chan bool, error) {
 								RootCAs:      certPool,
 							})
 							opts = append(opts, grpc.WithTransportCredentials(transportCreds))
+						} else if *insecure {
+                                                        transportCreds := credentials.NewTLS(&tls.Config{
+                                                                InsecureSkipVerify: true,
+                                                        })
+                                                        opts = append(opts, grpc.WithTransportCredentials(transportCreds))
 						} else {
 							opts = append(opts, grpc.WithInsecure())
 						}
