@@ -55,8 +55,8 @@ var (
 	grpcHeaders    = flag.Bool("grpc-headers", false, "Add grpc headers in DB")
 	udp            = flag.Bool("udp-server", false, "Become UDP server to receive UDP telemetry packets from Junos")
 	port           = flag.Int64("port", 0, "UDP port number to listen on")
-	insecure       = flag.Bool("insecure", false, "When set, the server certificate will not be verified during TLS handshake."))
-	
+	insecure       = flag.Bool("insecure", false, "When set, the server certificate will not be verified during TLS handshake.")
+
 	version   = "version-not-available"
 	buildTime = "build-time-not-available"
 )
